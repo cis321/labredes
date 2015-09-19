@@ -4,6 +4,7 @@ Configuracion Base de datos
 1. Instalar PostgresSQL
 2. Crear base de datos llamada *redes* con comando: <code>sudo -u *usuario_computador* psql -c "CREATE DATABASE redes"</code>
 3. Crear tablas de base de datos a partir de archivo *db.sql* con comando: <code> sudo -u *usuario_computador* psql -d redes -a -f *ruta_archivo*</code>
+4. Ejecutar comando <code>pip install requirements.txt</code> para instalacion de dependencias
 
 Estructura del mensaje
 ======================
@@ -24,3 +25,7 @@ TCP
 UDP
 ---
 1. *Mensaje* : Se envia el mensaje con la estructura indicada.
+
+Ejecucion
+=========
+Utilizar comando <code>python *servidorTCP.py|servidorUDP.py*</code> para ejecutar los servidores
