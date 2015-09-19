@@ -11,3 +11,16 @@ Estructura del mensaje
 *ID del cliente* - *latitud* - *longitud* - *altitud* - *velocidad*
 
 NOTA: El id de cliente debe ser un identificador unico. Se recomienda asignar al thread del cliente un id secuencial o valor generado.
+
+Protocolos
+==========
+
+TCP
+---
+1. *HELLO* : Indica el inicio de conexion.
+2. *Mensaje* : Secuencia de mensajes con la estructura indicada.
+3. *GOODBYE* : Cierre de conexion TCP.
+
+UDP
+---
+1. *Mensaje* : Se envia el mensaje con la estructura indicada.
