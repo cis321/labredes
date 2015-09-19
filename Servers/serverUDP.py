@@ -15,7 +15,7 @@ def udp():
 			count+=1
 			print 'Cliente [' + addr[0] + ': ' + str(addr[1]) + '] : ' + data
 			args = data.split("-")
-			json_data = {'cliente':args[0], 'latitud':args[1], 'longitud':args[2],'altitud':args[3],'velocidad':args[4]}
+			json_data = {'cliente':args[0], 'latitud':args[1], 'longitud':args[2],'altitud':args[3],'velocidad':args[4], 'protocolo':'UDP'}
 			handler.insert_location(json_data)
 	finally:
 		print "Total de datagramas recibidos: " + str(count)
