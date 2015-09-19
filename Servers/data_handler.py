@@ -1,4 +1,6 @@
-import psycopg2, datetime
+import psycopg2
+
+
 class Data_Handler(object):
 	global USER
 	USER = 'sfrsebastian'
@@ -13,7 +15,9 @@ class Data_Handler(object):
 			print "Unable to connect to the database"
 
 	def insert_location(self, location):
-		self.cur.execute("INSERT INTO Ubicacion(client_name, latitud, longitud, altitud, velocidad, fecha, protocolo) VALUES(%(cliente)s, %(latitud)s, %(longitud)s, %(altitud)s, %(velocidad)s, now(), %(protocolo)s);",location)
+		self.cur.execute(
+			"INSERT INTO Ubicacion(client_name, latitud, longitud, altitud, velocidad, fecha, protocolo) VALUES(%(cliente)s, %(latitud)s, %(longitud)s, %(altitud)s, %(velocidad)s, now(), %(protocolo)s);",
+			location)
 		self.conn.commit()
 
 	def close_connection(self):

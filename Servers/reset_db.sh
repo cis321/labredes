@@ -1,0 +1,1 @@
+sudo -u sfrsebastian psql -d redes -a -f db.sql

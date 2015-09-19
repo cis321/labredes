@@ -1,0 +1,3 @@
+SELECT client_name, count(client_name) FROM ubicacion WHERE protocolo = 'UDP' GROUP BY client_name ORDER BY client_name;
+SELECT client_name, count(client_name) FROM ubicacion WHERE protocolo = 'TCP' GROUP BY client_name ORDER BY client_name;
+
