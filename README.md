@@ -8,6 +8,6 @@ Configuracion Base de datos
 Estructura del mensaje
 ======================
 
-<span><ID del cliente> - <latitud> - <longitud> - <altitud> - <velocidad></span>
+*ID del cliente* - *latitud* - *longitud* - *altitud* - *velocidad*
 
 NOTA: El id de cliente debe ser un identificador unico. Se recomienda asignar al thread del cliente un id secuencial o valor generado.
