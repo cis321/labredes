@@ -1,8 +1,8 @@
 import socket
 import threading
 
-TCP_IP = "127.0.0.1"
-TCP_PORT = 5006
+TCP_IP = "169.254.210.7"
+TCP_PORT = 1007
 BUFFER_SIZE = 4096
 
 print "TCP target IP:", TCP_IP
@@ -24,6 +24,7 @@ def send_message(identificador):
 
 for i in range(0,10):
 	thread = threading.Thread(target=send_message, args=(str(i)))
+	thread.daemon = True
 	thread.start()
 
 print 'Despachados 10 threads'
