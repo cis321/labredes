@@ -2,13 +2,11 @@
     <string name="app_name">Lab6Redes</string>
     <string name="action_settings">Settings</string>
     <string-array name="valores_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>1</item>
+        <item>10</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
     </string-array>
 </resources>
