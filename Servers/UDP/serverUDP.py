@@ -25,6 +25,7 @@ def udp():
 			handler.insert_location(json_data)
 	finally:
 		handler.close_connection()
+		sock.close()
 		print "Total de datagramas recibidos: " + str(count)
 
 
