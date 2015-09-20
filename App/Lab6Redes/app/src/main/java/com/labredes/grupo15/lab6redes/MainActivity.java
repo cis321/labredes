@@ -11,9 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -43,19 +47,19 @@ public class MainActivity extends AppCompatActivity {
                 String text = spinner_peticiones.getSelectedItem().toString();
 
                 if (text.equals("1")){
-                    Log.i("piros","bla bla 50");
+                    sendMessageTCP("holaa", 1);
                 }
                 if (text.equals("10")){
-                    Log.i("piros","bla bla 50");
+                    sendMessageTCP("holaa", 10);
                 }
                 if (text.equals("100")){
-                    Log.i("piros","bla bla 100");
+                    sendMessageTCP("holaa", 100);
                 }
                 if (text.equals("200")){
-                    Log.i("piros","bla bla 200");
+                    sendMessageTCP("holaa", 200);
                 }
                 if (text.equals("300")){
-                    Log.i("piros","bla bla 300");
+                    sendMessageTCP("holaa", 300);
                 }
 
             }
@@ -70,23 +74,34 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void sendMessage(String message) {
-        try {
-            Socket socket = new Socket("localhost", 5006);
+    public void sendMessageTCP(String message, int repeticiones) {
+        for( int i = 0 ; i < repeticiones ; i++) {
+            try {
+                Socket socket = new Socket("192.168.0.7", 5006);
 
-            OutputStream out = socket.getOutputStream();
-            PrintWriter output = new PrintWriter(out);
+                InputStream in = socket.getInputStream();
+                OutputStream out = socket.getOutputStream();
+                PrintWriter output = new PrintWriter(out);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-            output.println("Hello from Android hubicación");
 
-            out.flush();
-            out.close();
-            socket.close();
+                output.println("HELLO\n");
 
-        } catch (UnknownHostException e){
 
-        } catch (IOException e){
+                if (reader.readLine().equals("HELLO\n")){
+                    output.println(message);
+                }
+                output.println("GOODBYE\n");
 
+                out.flush();
+                out.close();
+                socket.close();
+
+            } catch (UnknownHostException e){
+
+            } catch (IOException e){
+
+            }
         }
     }
 
