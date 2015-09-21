@@ -3,7 +3,7 @@ import psycopg2
 
 class Data_Handler(object):
 	global USER
-	USER = 'sfrsebastian'
+	USER = 'postgres'
 	conn = None
 	cur = None
 

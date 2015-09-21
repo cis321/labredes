@@ -4,7 +4,7 @@ sys.path.append('../..')
 import socket
 from Servers import data_handler
 
-LOCAL_IP = "127.0.0.1"
+LOCAL_IP = "192.168.0.3"
 UDP_PORT = 5005
 
 
@@ -14,7 +14,7 @@ def udp():
 	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	sock.bind((LOCAL_IP, UDP_PORT))
 	try:
-		handler = data_handler.Data_Handler()
+		#handler = data_handler.Data_Handler()
 		while True:
 			data, addr = sock.recvfrom(1024)
 			count += 1
@@ -22,9 +22,9 @@ def udp():
 			args = data.split("-")
 			json_data = {'cliente': args[0], 'latitud': args[1], 'longitud': args[2], 'altitud': args[3],
 						 'velocidad': args[4], 'protocolo': 'UDP'}
-			handler.insert_location(json_data)
+		#	handler.insert_location(json_data)
 	finally:
-		handler.close_connection()
+		#handler.close_connection()
 		sock.close()
 		print "Total de datagramas recibidos: " + str(count)
 

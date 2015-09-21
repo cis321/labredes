@@ -20,16 +20,19 @@
         android:text="Hola mundo"
         android:textAlignment="center"/>
     <RadioGroup
-        android:id="@+id/radio"
+        android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
         <RadioButton
             android:text="TCP"
+            android:id="@+id/TCP"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:checked="true" />
         <RadioButton
             android:text="UDP"
+            android:id="@+id/UDP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </RadioGroup>

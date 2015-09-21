@@ -5,7 +5,7 @@ import socket
 import threading
 from Servers import data_handler
 
-LOCAL_IP = "127.0.0.1"
+LOCAL_IP = "192.168.0.3"
 TCP_PORT = 5006
 BUFFER_SIZE = 1024
 
@@ -30,7 +30,7 @@ def tcp():
 def protocol_handler(conn, identificador, addr):
 	try:
 		count = 0
-		handler = data_handler.Data_Handler()
+#		handler = data_handler.Data_Handler()
 		for data in readlines(conn):
 			print 'Thread ' + str(identificador) + ' recibe[' + addr[0] + ': ' + str(addr[1]) + '] : ' + data
 			count += 1
@@ -42,10 +42,10 @@ def protocol_handler(conn, identificador, addr):
 			else:
 				args = data.split("-")
 				json_data = {'cliente': args[0], 'latitud': args[1], 'longitud': args[2], 'altitud': args[3],'velocidad': args[4], 'protocolo': 'TCP'}
-				handler.insert_location(json_data)
+#				handler.insert_location(json_data)
 	finally:
 		conn.close()
-		handler.close_connection()
+#		handler.close_connection()
 		print "Total de envios a Thread " + str(identificador) + " : " + str(count)
 
 def readlines(conn, delim='\n'):

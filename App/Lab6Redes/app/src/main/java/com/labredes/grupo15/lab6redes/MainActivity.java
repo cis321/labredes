@@ -4,27 +4,19 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class MainActivity extends AppCompatActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
 
@@ -43,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements GooglePlayService
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.valores_array, android.R.layout.simple_spinner_item);
         Spinner spinner_peticiones=(Spinner) findViewById(R.id.spinner_peticiones);
 
+
 // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
@@ -59,28 +52,57 @@ public class MainActivity extends AppCompatActivity implements GooglePlayService
                 Spinner spinner_peticiones=(Spinner) findViewById(R.id.spinner_peticiones);
                 String text = spinner_peticiones.getSelectedItem().toString();
 
-                if (text.equals("1")){
+                RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup);
+                int selectedId = rg.getCheckedRadioButtonId();
+                RadioButton radioButton = (RadioButton) findViewById(selectedId);
 
-                    Log.i("blaa", "" + mLastLocation );
-                    //sendMessageTCP("Latitud: " + String.valueOf(mLastLocation.getLatitude()) + "Longitud: " + String.valueOf(mLastLocation.getLongitude()), 1);
+                if (radioButton.getText().equals("TCP")){
+
+                    if (text.equals("1")){
+                        new SenderTCP().execute(1);
+                    }
+                    if (text.equals("10")){
+                        new SenderTCP().execute(10);
+                    }
+                    if (text.equals("50")){
+                        new SenderTCP().execute(50);
+                    }
+                    if (text.equals("100")){
+                        new SenderTCP().execute(100);
+                    }
+                    if (text.equals("200")){
+                        new SenderTCP().execute(200);
+                    }
+                    if (text.equals("300")){
+                        new SenderTCP().execute(300);
+                    }
                 }
-                if (text.equals("10")){
-                    sendMessageTCP("Latitud: " + String.valueOf(mLastLocation.getLatitude()) + "Longitud: " + String.valueOf(mLastLocation.getLongitude()), 10);
+
+                if (radioButton.getText().equals("UDP")){
+
+                    if (text.equals("1")){
+                        new SenderUDP().execute(1);
+                    }
+                    if (text.equals("10")){
+                        new SenderUDP().execute(10);
+                    }
+                    if (text.equals("50")){
+                        new SenderUDP().execute(50);
+                    }
+                    if (text.equals("100")){
+                        new SenderUDP().execute(100);
+                    }
+                    if (text.equals("200")){
+                        new SenderUDP().execute(200);
+                    }
+                    if (text.equals("300")){
+                        new SenderUDP().execute(300);
+                    }
                 }
-                if (text.equals("100")){
-                    sendMessageTCP("Latitud: " + String.valueOf(mLastLocation.getLatitude()) + "Longitud: " + String.valueOf(mLastLocation.getLongitude()), 100);
-                }
-                if (text.equals("200")){
-                    sendMessageTCP("Latitud: " + String.valueOf(mLastLocation.getLatitude()) + "Longitud: " + String.valueOf(mLastLocation.getLongitude()), 200);
-                }
-                if (text.equals("300")){
-                    sendMessageTCP("Latitud: " + String.valueOf(mLastLocation.getLatitude()) + "Longitud: " + String.valueOf(mLastLocation.getLongitude()), 300);
-                }
+
 
             }
         });
-
-
 
     }
 
@@ -91,35 +113,8 @@ public class MainActivity extends AppCompatActivity implements GooglePlayService
         return true;
     }
 
-    public void sendMessageTCP(String message, int repeticiones) {
-        for( int i = 0 ; i < repeticiones ; i++) {
-            try {
-                Socket socket = new Socket("192.168.0.7", 5006);
+    public void sendMessageTCP(int repeticiones) {
 
-                InputStream in = socket.getInputStream();
-                OutputStream out = socket.getOutputStream();
-                PrintWriter output = new PrintWriter(out);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
-
-                output.println("HELLO\n");
-
-
-                if (reader.readLine().equals("HELLO\n")){
-                    output.println(message);
-                }
-                output.println("GOODBYE\n");
-
-                out.flush();
-                out.close();
-                socket.close();
-
-            } catch (UnknownHostException e){
-
-            } catch (IOException e){
-
-            }
-        }
     }
 
     @Override
