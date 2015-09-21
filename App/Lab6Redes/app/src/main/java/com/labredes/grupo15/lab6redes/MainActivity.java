@@ -1,5 +1,6 @@
 package com.labredes.grupo15.lab6redes;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,17 +12,26 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
+
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+    private String latitude;
+    private String longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
 
+        buildGoogleApiClient();
+        locationService();
+
         spinner_peticiones.setAdapter(adapter);
 
         Button button = (Button) findViewById(R.id.btn_start);
@@ -47,23 +60,27 @@ public class MainActivity extends AppCompatActivity {
                 String text = spinner_peticiones.getSelectedItem().toString();
 
                 if (text.equals("1")){
-                    sendMessageTCP("holaa", 1);
+
+                    Log.i("blaa", "" + mLastLocation );
+                    //sendMessageTCP("Latitud: " + String.valueOf(mLastLocation.getLatitude()) + "Longitud: " + String.valueOf(mLastLocation.getLongitude()), 1);
                 }
                 if (text.equals("10")){
-                    sendMessageTCP("holaa", 10);
+                    sendMessageTCP("Latitud: " + String.valueOf(mLastLocation.getLatitude()) + "Longitud: " + String.valueOf(mLastLocation.getLongitude()), 10);
                 }
                 if (text.equals("100")){
-                    sendMessageTCP("holaa", 100);
+                    sendMessageTCP("Latitud: " + String.valueOf(mLastLocation.getLatitude()) + "Longitud: " + String.valueOf(mLastLocation.getLongitude()), 100);
                 }
                 if (text.equals("200")){
-                    sendMessageTCP("holaa", 200);
+                    sendMessageTCP("Latitud: " + String.valueOf(mLastLocation.getLatitude()) + "Longitud: " + String.valueOf(mLastLocation.getLongitude()), 200);
                 }
                 if (text.equals("300")){
-                    sendMessageTCP("holaa", 300);
+                    sendMessageTCP("Latitud: " + String.valueOf(mLastLocation.getLatitude()) + "Longitud: " + String.valueOf(mLastLocation.getLongitude()), 300);
                 }
 
             }
         });
+
+
 
     }
 
@@ -119,4 +136,34 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    public void locationService(){
+
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+
+            latitude = String.valueOf(mLastLocation.getLatitude());
+            longitude = String.valueOf(mLastLocation.getLongitude());
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+    }
+
+    @Override
+    public void onDisconnected() {
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult var1) {
+    }
+
 }
