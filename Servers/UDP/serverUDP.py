@@ -4,7 +4,7 @@ sys.path.append('../..')
 import socket
 from Servers import data_handler
 
-LOCAL_IP = "192.168.0.3"
+LOCAL_IP = "157.253.220.83"
 UDP_PORT = 5005
 
 
@@ -19,8 +19,8 @@ def udp():
 			data, addr = sock.recvfrom(1024)
 			count += 1
 			print 'Cliente [' + addr[0] + ': ' + str(addr[1]) + '] : ' + data
-			args = data.split("-")
-			json_data = {'cliente': args[0], 'latitud': args[1], 'longitud': args[2], 'altitud': args[3],
+			args = data.split(",")
+			json_data = {'id': args[0], 'latitud': args[1], 'longitud': args[2], 'altitud': args[3],
 						 'velocidad': args[4], 'protocolo': 'UDP'}
 		#	handler.insert_location(json_data)
 	finally:

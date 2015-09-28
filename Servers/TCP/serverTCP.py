@@ -5,7 +5,7 @@ import socket
 import threading
 from Servers import data_handler
 
-LOCAL_IP = "192.168.0.3"
+LOCAL_IP = "157.253.220.83"
 TCP_PORT = 5006
 BUFFER_SIZE = 1024
 
@@ -40,8 +40,8 @@ def protocol_handler(conn, identificador, addr):
 			elif data == 'GOODBYE':
 				break
 			else:
-				args = data.split("-")
-				json_data = {'cliente': args[0], 'latitud': args[1], 'longitud': args[2], 'altitud': args[3],'velocidad': args[4], 'protocolo': 'TCP'}
+				args = data.split(",")
+				json_data = {'id': args[0], 'latitud': args[1], 'longitud': args[2], 'altitud': args[3],'velocidad': args[4], 'protocolo': 'TCP'}
 #				handler.insert_location(json_data)
 	finally:
 		conn.close()

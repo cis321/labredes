@@ -1,5 +1,6 @@
 package com.labredes.grupo15.lab6redes;
 
+import android.location.Location;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -26,21 +27,22 @@ class SenderTCP extends AsyncTask<Integer, Void, String> {
 
         for( int i = 0 ; i < repeticiones[0].intValue() ; i++) {
             try {
-                Socket socket = new Socket("192.168.0.3", 5006);
+                Socket socket = new Socket("157.253.220.83", 5006);
 
                 InputStream in = socket.getInputStream();
                 OutputStream out = socket.getOutputStream();
                 PrintWriter output = new PrintWriter(out);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-                String message = i+"-234.444-3455-2645-3";
+                Location location = buffer.getLocation();
+                String message = i + "," + location.getLatitude() + "," + location.getLongitude() + "," + location.getAltitude() + "," + location.getSpeed();
 
-                output.println("HELLO\n");
+                output.println("HELLO");
 
                 Log.i("TCP", "Ubicación: " + message);
                 output.println(message);
 
-                output.println("GOODBYE\n");
+                output.println("GOODBYE");
 
                 out.flush();
                 out.close();

@@ -1,5 +1,6 @@
 package com.labredes.grupo15.lab6redes;
 
+import android.location.Location;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -21,8 +22,9 @@ public class SenderUDP extends AsyncTask<Integer, Void, String> {
 
         for( int i = 0 ; i < repeticiones[0].intValue() ; i++) {
             try {
-                String messageStr = i+"-234.444-3455-2645-3";
-                InetAddress ip = InetAddress.getByName("192.168.0.3");
+                Location location = buffer.getLocation();
+                String messageStr = i + "," + location.getLatitude() + "," + location.getLongitude() + "," + location.getAltitude() + "," + location.getSpeed();
+                InetAddress ip = InetAddress.getByName("157.253.220.83");
                 int server_port = 5005;
                 int msg_length = messageStr.length();
                 byte[] message = messageStr.getBytes();

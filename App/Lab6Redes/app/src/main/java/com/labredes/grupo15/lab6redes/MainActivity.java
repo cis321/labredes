@@ -4,6 +4,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,8 +23,6 @@ public class MainActivity extends AppCompatActivity implements GooglePlayService
 
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
-    private String latitude;
-    private String longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +40,16 @@ public class MainActivity extends AppCompatActivity implements GooglePlayService
 // Apply the adapter to the spinner
 
         buildGoogleApiClient();
-        locationService();
 
         spinner_peticiones.setAdapter(adapter);
+
+        LocartorService locartorService = new LocartorService(getApplicationContext());
+
+        Log.i("locartorService: ","" + locartorService);
+
+        mLastLocation = locartorService.getLocationObject();
+
+        buffer.setLocation(mLastLocation);
 
         Button button = (Button) findViewById(R.id.btn_start);
 
@@ -136,17 +142,6 @@ public class MainActivity extends AppCompatActivity implements GooglePlayService
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .build();
-    }
-
-    public void locationService(){
-
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
-        if (mLastLocation != null) {
-
-            latitude = String.valueOf(mLastLocation.getLatitude());
-            longitude = String.valueOf(mLastLocation.getLongitude());
-        }
     }
 
     @Override
